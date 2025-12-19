@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: deskone_app
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www/html
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: deskone_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: deskone
+      MYSQL_USER: deskone
+      MYSQL_PASSWORD: deskone
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - dbdata:/var/lib/mysql
+
+volumes:
+  dbdata:
