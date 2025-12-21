@@ -38,12 +38,3 @@ echo "Gateway is running on port 80."
 chmod +x create-tenant.sh
 
 echo "SETUP FINISHED!"
-
-# read -p "Do you want to create a demo tenant 'demo' now? (y/n) " -n 1 -r
-# echo
-# if [[ $REPLY =~ ^[Yy]$ ]]
-# then
-#     ./create-tenant.sh demo
-# else
-#     echo "OK. You can create a tenant later using: ./create-tenant.sh <name>"
-# fi
