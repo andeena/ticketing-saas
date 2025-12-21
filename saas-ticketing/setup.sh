@@ -9,6 +9,11 @@ echo "INITIALIZING SAAS DESKONE PROJECT (AUTO-SETUP)"
 if [ ! -f .env ]; then
     echo "[1/6] Copying .env file..."
     cp .env.example .env
+    # mkdir -p storage/framework/{sessions,views,cache}
+    # mkdir -p storage/app/public
+    # mkdir -p bootstrap/cache
+    # mkdir -p storage/logs
+
 else
     echo "[1/6] .env file already exists."
 fi
@@ -21,6 +26,7 @@ docker network create cloud-net 2>/dev/null || echo "Network 'cloud-net' already
 echo "[3/6] Building Base Docker Image..."
 docker build --network=host -t ticketing-image .
 
+echo "[4/6] Installing Dependencies (Composer) & Generating Key..."
 echo "[4/7] Preparing Storage Directories on Host..."
 mkdir -p storage/framework/{sessions,views,cache}
 mkdir -p storage/app/public

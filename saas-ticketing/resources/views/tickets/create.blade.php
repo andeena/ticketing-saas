@@ -8,15 +8,15 @@
             @csrf
 
             <div class="mb-4">
-                <label class="block">Title</label>
+                <label class="block text-white ">Title</label>
                 <input type="text" name="title"
-                       class="w-full border rounded p-2" required>
+                       class="w-full border rounded-md p-2 bg-gray-800 text-white" required>
             </div>
 
             <div class="mb-4">
-                <label class="block">Description</label>
+                <label class="block text-white">Description</label>
                 <textarea name="description"
-                          class="w-full border rounded p-2" required></textarea>
+                          class="w-full border rounded-md p-2 bg-gray-800 text-white" required></textarea>
             </div>
 
             <button type="submit"
