@@ -14,7 +14,7 @@ CONTAINER_APP="${TENANT}_app"
 echo "[1/3] Deploying DeskOne for tenant: $TENANT"
 
 # Jalankan Container (PaaS Provisioning)
-TENANT_NAME=$TENANT docker-compose -p $TENANT up -d
+TENANT_NAME=$TENANT docker compose -p $TENANT up -d
 
 echo "Waiting for container to start..."
 sleep 5
@@ -26,6 +26,8 @@ docker exec $CONTAINER_APP chmod -R 775 storage bootstrap/cache
 docker exec $CONTAINER_APP php artisan optimize:clear
 # docker exec -it $CONTAINER_APP bash
 # chown -R www-data:www-data storage bootstrap/cache
+# docker exec $CONTAINER_APP chmod -R 777 storage bootstrap/cache
+# docker exec $CONTAINER_APP php artisan optimize:clear
 
 # migrate database
 echo "[3/3] Migrating database"

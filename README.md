@@ -29,12 +29,10 @@ Tujuan dari proyek ini adalah:
 ---
 
 ## Konsep Multi-Tenancy
-Sistem menggunakan pendekatan **shared database dengan tenant isolation**, di mana setiap data disimpan dengan identitas tenant (`tenant_id`).  
+Sistem menggunakan pendekatan Database per Tenant (Isolated Architecture) dengan isolasi berbasis Container, di mana setiap tenant memiliki instance database dan aplikasi yang terdedikasi secara terpisah  
 Hal ini memastikan bahwa:
-- Data antar organisasi tidak saling tercampur
-- Setiap tenant hanya dapat mengakses data miliknya sendiri
-- Sistem tetap efisien dan mudah dikembangkan
-
+- Data antar organisasi tersimpan dalam container database yang berbeda, menghilangkan risiko kebocoran data antar-tenant (data leakage).
+- Setiap tenant berjalan di lingkungan terisolasi; gangguan pada satu tenant tidak berdampak pada tenant lain.
 ---
 
 ## Arsitektur Sistem
