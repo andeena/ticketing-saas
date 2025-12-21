@@ -12,18 +12,10 @@ class TicketController extends Controller
     {
         $user = auth()->user();
 
-        if ($user->role === 'admin') {
-            // Admin lihat semua ticket di tenant
-            $tickets = Ticket::where('tenant_id', $user->tenant_id)
-                ->latest()
-                ->get();
-        } else {
-            // User hanya lihat ticket miliknya
-            $tickets = Ticket::where('tenant_id', $user->tenant_id)
-                ->where('user_id', $user->id)
-                ->latest()
-                ->get();
-        }
+        // Everyone sees all tickets in the same tenant
+        $tickets = Ticket::where('tenant_id', $user->tenant_id)
+            ->latest()
+            ->get();
 
         return view('tickets.index', compact('tickets'));
     }
