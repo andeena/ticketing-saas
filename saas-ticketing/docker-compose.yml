@@ -2,8 +2,8 @@ version: '3.8'
 
 services:
   app:
-    build: .
-    # image: ticketing-image
+    # build: .
+    image: ticketing-image
     container_name: ${TENANT_NAME}_app 
     restart: unless-stopped
     expose:
