@@ -21,7 +21,15 @@ docker network create cloud-net 2>/dev/null || echo "Network 'cloud-net' already
 echo "[3/6] Building Base Docker Image..."
 docker build --network=host -t ticketing-image .
 
-echo "[4/6] Installing Dependencies (Composer) & Generating Key..."
+echo "[4/7] Preparing Storage Directories on Host..."
+mkdir -p storage/framework/{sessions,views,cache}
+mkdir -p storage/app/public
+mkdir -p bootstrap/cache
+mkdir -p storage/logs
+chmod -R 777 storage bootstrap/cache
+echo "Storage directories created."
+
+echo "[5/6] Installing Dependencies (Composer) & Generating Key..."
 docker run --rm --network=host \
     -v "$(pwd):/var/www/html" \
     ticketing-image \
