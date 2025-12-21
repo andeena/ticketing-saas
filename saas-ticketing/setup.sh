@@ -7,22 +7,29 @@ echo "INITIALIZING SAAS DESKONE PROJECT (AUTO-SETUP)"
 
 # Cek & Copy .env
 if [ ! -f .env ]; then
-    echo "[1/5] Copying .env file..."
+    echo "[1/6] Copying .env file..."
     cp .env.example .env
 else
-    echo "[1/5] .env file already exists."
+    echo "[1/6] .env file already exists."
 fi
 
 # Buat Network Docker
-echo "[2/5] Setting up Docker Network..."
+echo "[2/6] Setting up Docker Network..."
 docker network create cloud-net 2>/dev/null || echo "Network 'cloud-net' already exists."
 
 # Build Image Utama 
-echo "[3/5] Building Base Docker Image..."
+echo "[3/6] Building Base Docker Image..."
 docker build --network=host -t ticketing-image .
 
+echo "[4/6] Installing Dependencies (Composer) & Generating Key..."
+docker run --rm --network=host \
+    -v "$(pwd):/var/www/html" \
+    ticketing-image \
+    bash -c "composer install --no-interaction --prefer-dist && php artisan key:generate"
+echo "vendor folder created & app_key generated."
+
 # Nyalakan Gateway
-echo "[4/5] Starting Gateway Service..."
+echo "[5/6] Starting Gateway Service..."
 cd gateway
 docker compose up -d
 cd ..
