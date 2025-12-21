@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -28,12 +29,18 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'role' => UserRole::class, 
         ];
     }
 
-    // TARUH METHOD DI DALAM CLASS
-    public function isAdmin()
+    // Role helper
+    public function isAdmin(): bool
     {
-        return $this->role === 'admin';
+        return $this->role === UserRole::ADMIN;
+    }
+
+    public function isUser(): bool
+    {
+        return $this->role === UserRole::USER;
     }
 }
