@@ -7,21 +7,21 @@
         <form method="POST" action="{{ route('users.store') }}">
             @csrf
 
-            <div class="mb-4">
+            <div class="mb-4 text-white">
                 <label>Name</label>
-                <input name="name" class="border rounded w-full p-2" required>
+                <input name="name" class="border rounded-md w-full p-2 bg-gray-800" required>
             </div>
 
-            <div class="mb-4">
+            <div class="mb-4 text-white">
                 <label>Email</label>
                 <input name="email" type="email"
-                       class="border rounded w-full p-2" required>
+                       class="border rounded-md w-full p-2 bg-gray-800" required>
             </div>
 
-            <div class="mb-4">
+            <div class="mb-4 text-white">
                 <label>Password</label>
                 <input name="password" type="password"
-                       class="border rounded w-full p-2" required>
+                       class="border rounded-md w-full p-2 bg-gray-800" required>
             </div>
 
             <button

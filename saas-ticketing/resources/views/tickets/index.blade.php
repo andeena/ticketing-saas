@@ -15,18 +15,18 @@
 
         <div class="mt-6 space-y-4">
             @forelse ($tickets as $ticket)
-                <div class="border rounded p-4 bg-white shadow-sm">
-                    <h3 class="font-bold text-lg">
+                <div class="border border-white/10 rounded-lg p-4 bg-gray-800 bg-gradient-to-br ">
+                    <h3 class="font-bold text-lg text-white">
                         {{ $ticket->title }}
                     </h3>
 
-                    <p class="mt-1 text-gray-700">
+                    <p class="mt-1 text-white">
                         {{ $ticket->description }}
                     </p>
 
                     {{-- Status --}}
                     <div class="mt-3">
-                        <span class="text-sm font-semibold text-gray-600">
+                        <span class="text-sm font-semibold text-white">
                             Status: {{ ucfirst(str_replace('_', ' ', $ticket->status)) }}
                         </span>
                     </div>
@@ -34,7 +34,7 @@
                     {{-- Admin Controls --}}
                     @if(auth()->user()->role === 'admin')
                         <div class="mt-3">
-                            <p class="text-sm text-gray-500">
+                            <p class="text-sm text-gray-400">
                                 Created by: {{ $ticket->user->name ?? 'User' }}
                             </p>
 
