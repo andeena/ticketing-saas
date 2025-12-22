@@ -32,7 +32,10 @@ class AuthenticationTest extends TestCase
 
     public function test_users_can_not_authenticate_with_invalid_password(): void
     {
-        $user = User::factory()->create();
+        // $user = User::factory()->create();
+        $user = User::factory()->create([
+            'tenant_id' => 1 
+        ]);
 
         $this->post('/login', [
             'email' => $user->email,
