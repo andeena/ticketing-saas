@@ -9,7 +9,7 @@ services:
     expose:
       - "80"
     volumes:
-      - .:/var/www/html
+      # - .:/var/www/html
       - storage_volume:/var/www/html/storage
     env_file:
       - .env

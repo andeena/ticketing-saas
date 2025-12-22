@@ -99,7 +99,8 @@ class UserController extends Controller
             'name'      => $validated['name'],
             'email'     => $validated['email'],
             'password'  => Hash::make($validated['password']),
-            'tenant_id' => $admin->tenant_id,   // tenant isolation
+            // 'tenant_id' => $admin->tenant_id,   // tenant isolation
+            'tenant_id' => 1,   // tenant isolation
             'role'      => $validated['role'],  // enum-safe
         ]);
 

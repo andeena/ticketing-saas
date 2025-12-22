@@ -15,9 +15,10 @@ echo "[1/3] Deploying DeskOne for tenant: $TENANT"
 
 # Jalankan Container (PaaS Provisioning)
 TENANT_NAME=$TENANT docker compose -p $TENANT up -d
+# docker-compose -p "$TENANT" up -d
 
 echo "Waiting for container to start..."
-sleep 5
+sleep 10
 
 # Fix Permissions Otomatis 
 echo "[2/3] Setting up permissions"
