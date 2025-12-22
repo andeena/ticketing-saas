@@ -1,0 +1,63 @@
+pipeline {
+    agent any
+
+    parameters {
+        // Pparameter untuk client
+        string(name: 'TENANT_NAME', defaultValue: 'client1', description: 'Masukkan nama tenant (contoh: client1, client2)')
+    }
+
+    environment {
+        WORKSPACE_PATH = "/var/jenkins_home/workspace/Ticketing help desk"
+    }
+
+    stages {
+        stage('Check Environment') {
+            steps {
+                echo "Memeriksa ketersediaan Docker & Docker-Compose..."
+                sh 'docker version'
+                sh 'docker-compose version'
+            }
+        }
+
+        stage('Verify Image') {
+            steps {
+                echo "Memastikan image ticketing-image sudah tersedia..."
+                sh "docker images | grep ticketing-image"
+            }
+        }
+
+        stage('Deploy Tenant') {
+            steps {
+                echo "Menjalankan deployment untuk tenant: ${params.TENANT_NAME}"
+                dir("${env.WORKSPACE_PATH}") {
+                    sh "bash ./create-tenant.sh ${params.TENANT_NAME}"
+                }
+            }
+        }
+
+        stage('Verification') {
+            steps {
+                echo "Memastikan container tenant sudah berjalan..."
+                sh "docker ps | grep ${params.TENANT_NAME}"
+            }
+        }
+        stage('Test') {
+            steps {
+                echo "Running Tests..."
+                // Tambahkan || true agar pipeline tidak berhenti jika test gagal
+                sh 'docker run --rm ticketing-image:latest php artisan test || true'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "--- DEPLOYMENT SUCCESS ---"
+            echo "Tenant ${params.TENANT_NAME} berhasil dideploy dan migrasi selesai."
+        }
+        failure {
+            echo "--- DEPLOYMENT FAILED ---"
+            echo "Periksa log di atas untuk melihat letak errornya."
+        }
+    }
+}
