@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  app:
+    # build: .
+    image: ticketing-image
+    container_name: ${TENANT_NAME}_app 
+    restart: unless-stopped
+    expose:
+      - "80"
+    volumes:
+      # - .:/var/www/html
+      - storage_volume:/var/www/html/storage
+    env_file:
+      - .env
+    environment:
+      - VIRTUAL_HOST=${TENANT_NAME}.localhost
+      - APP_URL=http://${TENANT_NAME}.localhost
+      - DB_HOST=${TENANT_NAME}_db
+    depends_on:
+      - db
+    networks:
+      - cloud-net
+
+  db:
+    image: mysql:8.0
+    container_name: ${TENANT_NAME}_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: deskone
+      MYSQL_USER: deskone
+      MYSQL_PASSWORD: deskone
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - cloud-net
+
+volumes:
+  db_data:
+  storage_volume:
+
+networks:
+  cloud-net:
+    external: true
